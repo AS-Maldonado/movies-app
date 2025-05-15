@@ -3,12 +3,13 @@ export const HEADERS = {
     API_KEY: process.env.EXPO_PUBLIC_MOVIE_API_KEY ?? "",
 };
 
-export const fetchMovies = async ({ query }: { query: string }) => {
+export const fetchMovies = async (query?: string) => {
+    const path = "https://imdb236.p.rapidapi.com";
     const endpoint = query
-        ? `/imdb/search?type=movie&originalTitleAutocomplete=${encodeURIComponent(
+        ? `${path}/imdb/search?type=movie&originalTitleAutocomplete=${encodeURIComponent(
               query
           )}`
-        : "/imdb/search?type=movie&rows=25&sortOrder=ASC&sortField=id";
+        : `${path}/imdb/most-popular-movies`;
 
     const response = await fetch(endpoint, {
         method: "GET",
@@ -23,6 +24,5 @@ export const fetchMovies = async ({ query }: { query: string }) => {
     }
 
     const data = await response.json();
-
-    return data;
+    return data.results ?? data;
 };
