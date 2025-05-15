@@ -8,7 +8,7 @@ export function MovieCard({
     originalTitle,
 }: Movie) {
     return (
-        <Link href={`/movie/${id}`} asChild>
+        <Link href={{ pathname: "/movies/[id]", params: { id } }} asChild>
             <TouchableOpacity className="w-[30%]">
                 <Image
                     className="w-full h-52 rounded-lg"

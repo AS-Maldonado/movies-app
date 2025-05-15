@@ -5,14 +5,7 @@ import { images } from "@/constants/images";
 import useFetch from "@/hooks/useFetch";
 import { fetchMovies } from "@/services/api";
 import { useRouter } from "expo-router";
-import {
-    ActivityIndicator,
-    FlatList,
-    Image,
-    ScrollView,
-    Text,
-    View,
-} from "react-native";
+import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 
 export default function Index() {
     const router = useRouter();
@@ -23,17 +16,8 @@ export default function Index() {
         error: moviesError,
     } = useFetch(() => fetchMovies());
 
-    const filteredMovies = movies
-        .filter((movie) => movie.primaryImage)
-        .slice(0, 25);
-
-    console.log("MOVIES:", movies);
-
     return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-            className="flex-1 bg-primary"
-        >
+        <View className="flex-1 bg-primary">
             <Image source={images.bg} className="absolute w-full z-0" />
             <View className="flex-1 px-5">
                 <Image
@@ -61,9 +45,8 @@ export default function Index() {
                         </Text>
 
                         <FlatList
-                            data={filteredMovies}
+                            data={movies}
                             numColumns={3}
-                            scrollEnabled={false}
                             keyExtractor={(item) => item.id}
                             renderItem={({ item }) => <MovieCard {...item} />}
                             columnWrapperStyle={{
@@ -77,6 +60,6 @@ export default function Index() {
                     </View>
                 )}
             </View>
-        </ScrollView>
+        </View>
     );
 }
